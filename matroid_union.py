@@ -40,3 +40,38 @@ class MatroidUnion:
         edge_list = self.d_graph.edge_list()
         for edge in edge_list:
             self.d_graph.delete_edge(edge)
+
+    def check_edge_pair_laman(self, edge_in, edge_out):
+        self.laman.add_edge(edge_in)
+        self.laman.delete_edge(edge_out)
+        self.laman.independence_update()
+        if self.laman.independent is True:
+            source = self.get_edge_number(edge_out)
+            sink = self.get_edge_number(edge_in)
+            self.d_graph.add_edge([source, sink])
+        self.laman.add_edge(edge_out)
+        self.laman.delete_edge(edge_in)
+
+    def check_edge_pair_tree(self, edge_in, edge_out):
+        self.tree.add_edge(edge_in)
+        self.tree.delete_edge(edge_out)
+        self.tree.independence_update()
+        if self.tree.independent is True:
+            source = self.get_edge_number(edge_out)
+            sink = self.get_edge_number(edge_in)
+            self.d_graph.add_edge([source, sink])
+        self.tree.add_edge(edge_out)
+        self.tree.delete_edge(edge_in)
+
+
+# Test code, ignore
+# check = MatroidUnion({0: {1}, 1: {0,2}, 2: {1}})
+#
+# check.laman.add_edge({0,1})
+# print("Laman graph", check.laman.adjacency_list)
+# print("edge directory", check.edge_directory)
+# print("d graph", check.d_graph.adjacency_list)
+# check.check_edge_pair_laman({1,2},{0,1})
+# print("d graph", check.d_graph.adjacency_list)
+# check.clear_d_graph()
+# print("d graph after clearing", check.d_graph.adjacency_list)

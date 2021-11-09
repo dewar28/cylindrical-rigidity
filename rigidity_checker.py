@@ -13,7 +13,6 @@ class RigidityChecker(Graph):
         super().__init__(graph_dict)
         self.dimension = dimension
         self.independent = False
-        self.rigid = False
 
     def dimension_increase(self):
         self.dimension += 1
@@ -49,27 +48,6 @@ class RigidityChecker(Graph):
             self.independent = True
         else:
             self.independent = False
-        if matrix_rank(matrix) == self.dimension * self.number_of_vertices() - \
-                (self.dimension * (self.dimension + 1) / 2):
-            self.rigid = True
-        else:
-            self.rigid = False
 
-    def rigidity_check(self):
+    def independence_update(self):
         self.rank_check(self.random_rigidity_matrix())
-        print("")
-        n = self.number_of_vertices()
-        m = self.number_of_edges()
-        if n < self.dimension + 1:
-            if 2 * m == n * (n - 1):
-                print(f"Graph is minimally rigid in dimension {self.dimension}.")
-            else:
-                print(f"Graph is independent and flexible in dimension {self.dimension}.")
-        elif (self.independent is True) and (self.rigid is True):
-            print(f"Graph is minimally rigid in dimension {self.dimension}.")
-        elif (self.independent is True) and (self.rigid is False):
-            print(f"Graph is independent and flexible in dimension {self.dimension}.")
-        elif (self.independent is False) and (self.rigid is True):
-            print(f"Graph is dependent and rigid in dimension {self.dimension}.")
-        elif (self.independent is False) and (self.rigid is False):
-            print(f"Graph is dependent and flexible in dimension {self.dimension}. Rerun to double check.")
