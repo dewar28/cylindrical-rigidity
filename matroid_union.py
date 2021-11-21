@@ -94,8 +94,6 @@ class MatroidUnion:
                 self.F.append(edge)
                 continue
 
-
-
     def get_edge_number(self, edge):
         """Obtain a key from edge_directory corresponding to the inputted edge."""
         for key in self.edge_directory:
